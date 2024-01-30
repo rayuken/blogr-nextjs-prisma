@@ -29,10 +29,6 @@ export async function GET(req: NextRequest) {
   console.log("REP-get");
   
   try {
-    if (!user?.email) {
-      return NextResponse.json({ message: 'Not Authenticated!' }, { status: 401 });
-    }
-
     const  search = await req.nextUrl.searchParams.get('search');
 
     const posts = await prisma.post.findMany({
