@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Blogr Next.js Prisma
 
-## Getting Started
+Blogr Next.js Prisma es una plataforma simple de blogs construida con Next.js y Prisma, que permite a los usuarios crear, ver, editar y eliminar entradas de blog.
 
-First, run the development server:
+## Características
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Autenticación:** La autenticación de usuarios se implementa utilizando NextAuth.js, lo que permite a los usuarios registrarse, iniciar sesión y gestionar sus entradas de blog.
+- **Crear entradas de blog:** Los usuarios autenticados pueden crear nuevas entradas de blog proporcionando un título y contenido.
+- **Ver blogs:** Todos los usuarios, autenticados o no, pueden ver una lista de entradas de blog.
+- **Editar y eliminar:** Los usuarios autenticados pueden editar y eliminar sus propias entradas de blog.
+- **Modo sin conexión:** La aplicación proporciona soporte básico sin conexión, permitiendo a los usuarios ver entradas de blog descargadas previamente incluso sin conexión a Internet.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tecnologías utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js:** Un marco de React para construir aplicaciones web.
+- **Prisma:** Un kit de herramientas de base de datos moderno para Node.js y TypeScript.
+- **NextAuth.js:** Una biblioteca de autenticación para aplicaciones Next.js.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Configuración
 
-## Learn More
+1. Clona el repositorio:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/rayuken/blogr-nextjs-prisma.git
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Instala las dependencias:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   cd blogr-nextjs-prisma
+   npm install
+   ```
 
-## Deploy on Vercel
+3. Configura tu base de datos:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   - Actualiza los detalles de conexión de la base de datos en el archivo `.env`.
+   - Ejecuta las migraciones de Prisma:
+    (Nota estamos utilizando vercel - postgres para la base de datos pero puede ser independinete)
+     ```bash
+     npx prisma migrate dev
+     ```
+    comandos con vercel (ya haber realizado la instalacion y vercel link y descarga de .env)
+    ```bash
+     npx prisma db push
+     ```
+      ```bash
+     npx prisma generate
+     ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+4. Inicia el servidor de desarrollo:
+
+   ```bash
+   npm run dev
+   ```
+
+   La aplicación estará disponible en `http://localhost:3000`.
