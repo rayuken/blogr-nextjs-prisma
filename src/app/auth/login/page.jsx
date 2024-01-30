@@ -1,8 +1,9 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { signIn, useSession } from "next-auth/react";
-import {useRouter} from 'next/navigation'
-import {useState} from 'react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import Link from "next/link";
 
 function LoginPage() {
   const { data: session, status } = useSession()
@@ -14,7 +15,7 @@ function LoginPage() {
   } = useForm();
   const router = useRouter()
   const [error, setError] = useState(null)
-  
+
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
 
@@ -24,7 +25,7 @@ function LoginPage() {
       redirect: false,
     });
 
-    console.log("Sigiin",res,"Ses",session?.user)
+    console.log("Sigiin", res, "Ses", session?.user)
     if (res?.error) {
       setError(res.error)
     } else {
@@ -32,9 +33,9 @@ function LoginPage() {
       router.refresh()
     }
   });
-  console.log("REP",session, status);
+  console.log("REP", session, status);
   return (
-    <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
+    <div className="h-[calc(100vh-7rem)] flex flex-col justify-center items-center">
       <form onSubmit={onSubmit} className="w-1/4">
 
         {error && (
@@ -87,6 +88,11 @@ function LoginPage() {
           Login
         </button>
       </form>
+      <div>
+        <Link href="/auth/register">
+          Don&apos;t have an account?{" "}
+        </Link>
+      </div>
     </div>
   );
 }

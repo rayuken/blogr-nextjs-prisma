@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { useState } from 'react';
+import Loader from './loading';
 
 const EditModal = ({ post, onEdit }) => {
     const [newTitle, setNewTitle] = useState(post?.title);
     const [newContent, setNewContent] = useState(post?.content);
     const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const openModal = () => {
         console.log("OPEN");
@@ -23,20 +25,20 @@ const EditModal = ({ post, onEdit }) => {
     };
 
     const handleSave = async () => {
+        setLoading(true)
         try {
             const res = await axios.put("/api/posts", { title: newTitle, content: newContent, id: post.id });
             console.log("RESP up", res);
             if (!res.status === 200) {
                 throw new Error('Could not save post');
             }
-            // For now, let's just log the new values
-            console.log('Updated Title:', newTitle);
-            console.log('Updated Content:', newContent);
             onEdit();
             // Close the modal
             closeModal();
         } catch (error) {
             console.log("ERROR:", error);
+        }finally{
+            setLoading(false)
         }
     };
 
@@ -57,10 +59,13 @@ const EditModal = ({ post, onEdit }) => {
                         <label>Content:</label>
                         <textarea className='text-gray-900' value={newContent} onChange={(e) => setNewContent(e.target.value)} />
                     </div>
+                    {loading ?
+                    <Loader loading={loading}/>
+                    :
                     <div>
                         <button className='bg-green-600 p-2 m-1 rounded-md' onClick={handleSave}>Save</button>
                         <button className='bg-red-500 p-2 m-1 rounded-md' onClick={closeModal}>Cancel</button>
-                    </div>
+                    </div>}
                 </div>
             )}
         </div>

@@ -1,4 +1,4 @@
-import MyBlogList from '@/components/MyBlogList';
+import MyBlogList from '@/components/my-blog.list';
 import FormNewPost from '@/components/form-new-post';
 
 export default function Home() {
