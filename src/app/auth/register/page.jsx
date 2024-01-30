@@ -1,6 +1,8 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Loader from "@/components/loading";
 
 function RegisterPage() {
   const {
@@ -9,12 +11,13 @@ function RegisterPage() {
     formState: { errors },
   } = useForm();
   const router = useRouter();
+  const [loading, setLoading] = useState(false)
 
   const onSubmit = handleSubmit(async (data) => {
     if (data.password !== data.confirmPassword) {
       return alert("Passwords do not match");
     }
-
+    setLoading(true)
     const res = await fetch("/api/auth/register", {
       method: "POST",
       body: JSON.stringify({
@@ -26,10 +29,14 @@ function RegisterPage() {
         "Content-Type": "application/json",
       },
     });
+    console.log("RESP",res);
 
     if (res.ok) {
       router.push("/auth/login");
+    }else{
+      alert("Algo salio mal, verifica los datos")
     }
+    setLoading(false)
   });
 
   console.log(errors);
@@ -121,9 +128,13 @@ function RegisterPage() {
           </span>
         )}
 
-        <button className="w-full bg-blue-500 text-white p-3 rounded-lg mt-2">
-          Register
-        </button>
+        {loading ?
+          <Loader loading={loading} />
+          :
+          <button className="w-full bg-blue-500 text-white p-3 rounded-lg mt-2">
+            Register
+          </button>
+        }
       </form>
     </div>
   );
